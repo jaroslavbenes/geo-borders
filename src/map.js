@@ -8,7 +8,7 @@ let map;
 const leafletLayers = {};
 const geojsonCache = {};
 let activeLayers = new Set(['zsj']);
-let highlightedLayer = null;
+let selectedLayer = null; // persists after click; hover is separate
 
 export function initMap() {
   map = L.map('map', {
@@ -25,7 +25,75 @@ export function initMap() {
   // overlayPane default z-index is 400; katuze sits above all other vector layers
   map.createPane('katuzePane').style.zIndex = 450;
 
+  // Single map-level click handler cycles through all overlapping features
+  map.on('click', handleMapClick);
+
   return map;
+}
+
+// Point-in-polygon ray-casting (GeoJSON coordinates: [lng, lat])
+function pointInRing(point, ring) {
+  const [x, y] = point;
+  let inside = false;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const [xi, yi] = ring[i];
+    const [xj, yj] = ring[j];
+    if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) {
+      inside = !inside;
+    }
+  }
+  return inside;
+}
+
+function featureContainsPoint(feature, latlng) {
+  const point = [latlng.lng, latlng.lat];
+  const { type, coordinates } = feature.geometry;
+  if (type === 'Polygon') {
+    return pointInRing(point, coordinates[0]);
+  }
+  if (type === 'MultiPolygon') {
+    return coordinates.some(poly => pointInRing(point, poly[0]));
+  }
+  return false;
+}
+
+function handleMapClick(e) {
+  // Collect all features from active layers that contain the click point
+  const candidates = [];
+  for (const key of activeLayers) {
+    const data = geojsonCache[key];
+    if (!data) continue;
+    leafletLayers[key]?.eachLayer(lyr => {
+      if (featureContainsPoint(lyr.feature, e.latlng)) {
+        candidates.push({ key, lyr });
+      }
+    });
+  }
+
+  if (candidates.length === 0) return;
+
+  // Find where the currently selected feature sits in the candidate list
+  const currentIdx = candidates.findIndex(c => c.lyr === selectedLayer);
+  // Cycle to the next one (wraps around)
+  const nextIdx = (currentIdx + 1) % candidates.length;
+  const { key, lyr } = candidates[nextIdx];
+
+  selectFeature(key, lyr);
+}
+
+function selectFeature(key, lyr) {
+  if (selectedLayer) clearSelected();
+  selectedLayer = lyr;
+  lyr.setStyle(styleFeature(LAYER_CONFIG[key], true));
+  lyr.bringToFront();
+  showInfo(lyr.feature.properties, LAYER_CONFIG[key]);
+}
+
+function clearSelected() {
+  if (!selectedLayer) return;
+  const key = Object.keys(leafletLayers).find(k => leafletLayers[k].hasLayer(selectedLayer));
+  if (key) selectedLayer.setStyle(styleFeature(LAYER_CONFIG[key]));
+  selectedLayer = null;
 }
 
 async function loadGeoJSON(key) {
@@ -50,7 +118,6 @@ function styleFeature(cfg, highlight = false) {
 function showInfo(props, cfg) {
   const panel = document.getElementById('info-panel');
   document.getElementById('info-name').textContent = props[cfg.nameField] || '—';
-
   const rows = cfg.infoFields
     .filter(f => props[f.field])
     .map(f => `<tr><td>${f.label}</td><td>${props[f.field]}</td></tr>`)
@@ -61,10 +128,14 @@ function showInfo(props, cfg) {
 
 export async function toggleLayer(key) {
   if (leafletLayers[key]) {
-    // already loaded — just toggle visibility
     if (activeLayers.has(key)) {
       map.removeLayer(leafletLayers[key]);
       activeLayers.delete(key);
+      // clear selection if it belonged to this layer
+      if (selectedLayer && leafletLayers[key].hasLayer(selectedLayer)) {
+        selectedLayer = null;
+        document.getElementById('info-panel').style.display = 'none';
+      }
     } else {
       map.addLayer(leafletLayers[key]);
       activeLayers.add(key);
@@ -72,7 +143,7 @@ export async function toggleLayer(key) {
     return;
   }
 
-  // first load
+  // first load — no per-feature click handlers; map-level click handles everything
   const cfg = LAYER_CONFIG[key];
   const data = await loadGeoJSON(key);
 
@@ -82,19 +153,13 @@ export async function toggleLayer(key) {
     onEachFeature(feature, lyr) {
       lyr.on({
         mouseover(e) {
-          if (highlightedLayer) resetHighlight(highlightedLayer);
-          highlightedLayer = e.target;
+          if (e.target === selectedLayer) return;
           e.target.setStyle(styleFeature(cfg, true));
           e.target.bringToFront();
         },
         mouseout(e) {
-          if (highlightedLayer === e.target) {
-            e.target.setStyle(styleFeature(cfg));
-            highlightedLayer = null;
-          }
-        },
-        click(e) {
-          showInfo(feature.properties, cfg);
+          if (e.target === selectedLayer) return;
+          e.target.setStyle(styleFeature(cfg));
         },
       });
     },
@@ -102,12 +167,6 @@ export async function toggleLayer(key) {
 
   leafletLayers[key] = layer;
   activeLayers.add(key);
-}
-
-function resetHighlight(lyr) {
-  const key = Object.keys(leafletLayers).find(k => leafletLayers[k].hasLayer(lyr));
-  if (key) lyr.setStyle(styleFeature(LAYER_CONFIG[key]));
-  highlightedLayer = null;
 }
 
 export function flyToFeature(key, name) {
@@ -120,19 +179,11 @@ export function flyToFeature(key, name) {
   );
   if (!feature) return;
 
-  // ensure layer is shown
-  if (!activeLayers.has(key)) {
-    toggleLayer(key);
-  }
+  if (!activeLayers.has(key)) toggleLayer(key);
 
-  // find the actual Leaflet layer for this feature and highlight it
   leafletLayers[key]?.eachLayer(lyr => {
     if (lyr.feature?.properties[cfg.nameField] === feature.properties[cfg.nameField]) {
-      if (highlightedLayer) resetHighlight(highlightedLayer);
-      highlightedLayer = lyr;
-      lyr.setStyle(styleFeature(cfg, true));
-      lyr.bringToFront();
-      showInfo(feature.properties, cfg);
+      selectFeature(key, lyr);
     }
   });
 }
@@ -147,12 +198,4 @@ export function getAllFeatures() {
     }
   }
   return results;
-}
-
-export function getActiveLayerKeys() {
-  return [...activeLayers];
-}
-
-export function getLoadedLayerKeys() {
-  return Object.keys(geojsonCache);
 }

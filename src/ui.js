@@ -1,4 +1,4 @@
-import { toggleLayer, flyToFeature, getAllFeatures, getLoadedLayerKeys } from './map.js';
+import { toggleLayer, flyToFeature, getAllFeatures } from './map.js';
 import { LAYER_CONFIG } from './layers.js';
 
 export function initUI() {
