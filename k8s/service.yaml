@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: geo-borders
+  namespace: geo-borders
+spec:
+  selector:
+    app: geo-borders
+  ports:
+    - port: 80
+      targetPort: 80

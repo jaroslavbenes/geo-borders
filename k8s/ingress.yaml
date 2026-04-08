@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: geo-borders
+  namespace: geo-borders
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  ingressClassName: public
+  rules:
+    - host: test.jaroslavbenes.com
+      http:
+        paths:
+          - path: /geo-borders(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: geo-borders
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - test.jaroslavbenes.com
+      secretName: com-jaroslavbenes-test-ingress-tls

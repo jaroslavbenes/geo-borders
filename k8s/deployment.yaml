@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: geo-borders
+  namespace: geo-borders
+  labels:
+    app: geo-borders
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: geo-borders
+  template:
+    metadata:
+      labels:
+        app: geo-borders
+    spec:
+      imagePullSecrets:
+        - name: ghcr-secret
+      containers:
+        - name: geo-borders
+          image: ghcr.io/jaroslavbenes/geo-borders:latest
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+            limits:
+              cpu: 200m
+              memory: 64Mi
+          readinessProbe:
+            httpGet:
+              path: /geo-borders/
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
