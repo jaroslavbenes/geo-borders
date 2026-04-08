@@ -15,20 +15,7 @@ export const LAYER_CONFIG = {
       { label: 'Charakteristika', field: 'CHAR_KOD' },
     ],
   },
-  momc: {
-    label: 'Obvod',
-    file: `${BASE}data/momc.geojson`,
-    nameField: 'NAZEV',
-    color: '#ff2222',
-    fillOpacity: 0.08,
-    weight: 3,
-    infoFields: [
-      { label: 'Kód', field: 'KOD' },
-      { label: 'Obec', field: 'OBEC_KOD' },
-      { label: 'Okres', field: 'OKRES_KOD' },
-    ],
-  },
-  katuze: {
+katuze: {
     label: 'Kat. území',
     file: `${BASE}data/katuze.geojson`,
     nameField: 'NAZEV',

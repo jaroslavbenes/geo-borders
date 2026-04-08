@@ -91,7 +91,6 @@ export async function toggleLayer(key) {
         },
         click(e) {
           showInfo(feature.properties, cfg);
-          map.fitBounds(e.target.getBounds(), { padding: [40, 40], maxZoom: 16 });
         },
       });
     },
@@ -122,14 +121,13 @@ export function flyToFeature(key, name) {
     toggleLayer(key);
   }
 
-  // find the actual Leaflet layer for this feature and zoom+highlight it
+  // find the actual Leaflet layer for this feature and highlight it
   leafletLayers[key]?.eachLayer(lyr => {
     if (lyr.feature?.properties[cfg.nameField] === feature.properties[cfg.nameField]) {
       if (highlightedLayer) resetHighlight(highlightedLayer);
       highlightedLayer = lyr;
       lyr.setStyle(styleFeature(cfg, true));
       lyr.bringToFront();
-      map.fitBounds(lyr.getBounds(), { padding: [60, 60], maxZoom: 16 });
       showInfo(feature.properties, cfg);
     }
   });
