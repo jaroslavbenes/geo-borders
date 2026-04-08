@@ -108,10 +108,10 @@ async function loadGeoJSON(key) {
 function styleFeature(cfg, highlight = false) {
   return {
     color: cfg.color,
-    weight: highlight ? cfg.weight * 2.5 : cfg.weight,
+    weight: cfg.weight,
     fillColor: cfg.color,
-    fillOpacity: highlight ? 0.25 : cfg.fillOpacity,
-    opacity: highlight ? 1 : 0.8,
+    fillOpacity: highlight ? 0.35 : cfg.fillOpacity,
+    opacity: 0.8,
   };
 }
 
