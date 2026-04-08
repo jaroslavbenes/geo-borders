@@ -22,6 +22,9 @@ export function initMap() {
     maxZoom: 19,
   }).addTo(map);
 
+  // overlayPane default z-index is 400; katuze sits above all other vector layers
+  map.createPane('katuzePane').style.zIndex = 450;
+
   return map;
 }
 
@@ -74,7 +77,8 @@ export async function toggleLayer(key) {
   const data = await loadGeoJSON(key);
 
   const layer = L.geoJSON(data, {
-    style: () => styleFeature(cfg),
+    pane: cfg.pane,
+    style: () => ({ ...styleFeature(cfg), pane: cfg.pane }),
     onEachFeature(feature, lyr) {
       lyr.on({
         mouseover(e) {

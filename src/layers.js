@@ -15,13 +15,14 @@ export const LAYER_CONFIG = {
       { label: 'Charakteristika', field: 'CHAR_KOD' },
     ],
   },
-katuze: {
+  katuze: {
     label: 'Kat. území',
     file: `${BASE}data/katuze.geojson`,
     nameField: 'NAZEV',
-    color: '#ff2222',
+    color: '#2288ff',
     fillOpacity: 0.08,
     weight: 3,
+    pane: 'katuzePane',
     infoFields: [
       { label: 'Kód', field: 'KOD' },
       { label: 'Obec', field: 'OBEC_KOD' },
