@@ -53,4 +53,10 @@ export const LAYER_CONFIG = {
       { label: 'Okres', field: 'OKRES_KOD' },
     ],
   },
+  points: {
+    label: 'Body',
+    file: `${BASE}data/points.kml`,
+    type: 'points',
+    color: '#ffaa00',
+  },
 };

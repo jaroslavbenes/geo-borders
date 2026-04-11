@@ -164,6 +164,22 @@
       }
 
       .close-btn:hover { color: #e94560; }
+
+      .time-marker { background: transparent; border: none; }
+      .time-marker-inner {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: #ffaa00;
+        color: #1a1a2e;
+        font-weight: 700;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #1a1a2e;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      }
     </style>
   </head>
   <body>
@@ -174,6 +190,7 @@
         <button class="layer-btn" data-layer="zsj">ZSJ (125)</button>
         <button class="layer-btn" data-layer="katuze">Kat. území (23)</button>
         <button class="layer-btn" data-layer="obec">Obec</button>
+        <button class="layer-btn" data-layer="points">Body</button>
       </div>
       <div class="search-wrap">
         <input id="search" type="text" placeholder="Hledat oblast…" autocomplete="off" />
