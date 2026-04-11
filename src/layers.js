@@ -1,6 +1,18 @@
 const BASE = import.meta.env.BASE_URL;
 
 export const LAYER_CONFIG = {
+  neighborhoods: {
+    label: 'Čtvrtě',
+    file: `${BASE}data/neighborhoods.geojson`,
+    nameField: 'NAZEV',
+    color: '#ff2222',
+    fillOpacity: 0.06,
+    weight: 3,
+    infoFields: [
+      { label: 'Čtvrť', field: 'NAZEV' },
+      { label: 'ZSJ', field: 'zsj_count' },
+    ],
+  },
   zsj: {
     label: 'ZSJ',
     file: `${BASE}data/zsj.geojson`,
