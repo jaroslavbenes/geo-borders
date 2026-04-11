@@ -169,16 +169,12 @@ NEIGHBORHOODS = [
         "Malá Homolka",
         "U Doudleveckého hřbitova",
     ]),
-    ("Litice", [
+    ("Litice, Valcha a Lhota", [
         "Litice-u řeky",
         "Litická přehrada",
         "Litice",
-    ]),
-    ("Valcha", [
         "Valcha",
         "Valcha-Pod lesem",
-    ]),
-    ("Lhota", [
         "Lhota",
     ]),
     ("Nová Hospoda", [
