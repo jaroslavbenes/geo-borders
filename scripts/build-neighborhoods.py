@@ -24,6 +24,7 @@ NEIGHBORHOODS = [
         "Autobusové nádraží",
         "Petrohrad",
         "Lobezská-průmyslový obvod",
+        "U zimního stadionu",
     ]),
     ("Roudná", [
         "Roudná",
@@ -31,7 +32,6 @@ NEIGHBORHOODS = [
         "Zadní Roudná",
     ]),
     ("Doudlevce", [
-        "U zimního stadionu",
         "Doudlevce",
         "Doudlevce-průmyslový obvod",
     ]),
