@@ -85,7 +85,6 @@ NEIGHBORHOODS = [
         "Starý Lochotín",
         "Sídliště Lochotín-jih",
         "Sídliště Lochotín-sever",
-        "Čechurov-sever",
         "Pod Mikulkou",
         "Zavadilka-sever",
         "Zavadilka-jih",
@@ -144,6 +143,7 @@ NEIGHBORHOODS = [
         "Hradiště",
         "Malá Homolka",
         "Sídliště Slovany",
+        "Čechurov-sever",
     ]),
     ("Božkov", [
         "Božkov-průmyslový obvod",
