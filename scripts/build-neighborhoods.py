@@ -51,13 +51,12 @@ NEIGHBORHOODS = [
     ("Hlavní závod", [
         "Hlavní závod",
     ]),
-    ("Borská pole", [
+    ("Borská pole, Zátiší a Nová Hospoda", [
         "Borská pole",
         "Borské polesí",
-    ]),
-    ("Zátiší", [
         "Zátiší",
         "Domažlická-průmyslový obvod",
+        "Nová Hospoda",
     ]),
     ("Skvrňany", [
         "Přední Skvrňany",
@@ -176,9 +175,6 @@ NEIGHBORHOODS = [
         "Valcha",
         "Valcha-Pod lesem",
         "Lhota",
-    ]),
-    ("Nová Hospoda", [
-        "Nová Hospoda",
     ]),
     ("Křimice", [
         "Křimice",
