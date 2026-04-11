@@ -187,14 +187,10 @@ NEIGHBORHOODS = [
         "Křimice",
         "Křimice-východ",
     ]),
-    ("Radčice", [
+    ("Radčice, Malesice a Dolní Vlkýš", [
         "Radčice",
         "Radčice-Pod Kyjovem",
-    ]),
-    ("Malesice", [
         "Malesice",
-    ]),
-    ("Dolní Vlkýš", [
         "Dolní Vlkýš",
     ]),
     ("Újezd", [
