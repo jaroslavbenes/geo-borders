@@ -22,15 +22,13 @@ NEIGHBORHOODS = [
         "Hlavní nádraží",
         "Pivovary",
         "Autobusové nádraží",
+        "Petrohrad",
+        "Lobezská-průmyslový obvod",
     ]),
     ("Roudná", [
         "Roudná",
         "Záhorsko",
         "Zadní Roudná",
-    ]),
-    ("Petrohrad", [
-        "Petrohrad",
-        "Lobezská-průmyslový obvod",
     ]),
     ("Doudlevce", [
         "U zimního stadionu",
