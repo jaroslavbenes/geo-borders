@@ -45,8 +45,6 @@ NEIGHBORHOODS = [
         "Staré Bory",
         "Sídliště Bory",
         "České údolí",
-    ]),
-    ("Hlavní závod", [
         "Hlavní závod",
     ]),
     ("Borská pole, Zátiší a Nová Hospoda", [
