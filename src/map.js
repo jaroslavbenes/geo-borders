@@ -126,13 +126,39 @@ function showInfo(props, cfg) {
   panel.style.display = 'block';
 }
 
+async function buildPointsLayer(cfg) {
+  const res = await fetch(cfg.file);
+  const text = await res.text();
+  const doc = new DOMParser().parseFromString(text, 'text/xml');
+  const placemarks = doc.getElementsByTagName('Placemark');
+  const group = L.layerGroup();
+  for (const pm of placemarks) {
+    const rawName = pm.getElementsByTagName('name')[0]?.textContent?.trim() || '';
+    const coordsText = pm.getElementsByTagName('coordinates')[0]?.textContent?.trim() || '';
+    if (!coordsText) continue;
+    const [lng, lat] = coordsText.split(',').map(Number);
+    if (Number.isNaN(lat) || Number.isNaN(lng)) continue;
+    const [name, time] = rawName.split(';').map(s => s?.trim() || '');
+    const icon = L.divIcon({
+      className: 'time-marker',
+      html: `<div class="time-marker-inner">${time}</div>`,
+      iconSize: [30, 30],
+      iconAnchor: [15, 15],
+    });
+    const marker = L.marker([lat, lng], { icon, interactive: true });
+    marker.bindTooltip(`${name} — ${time} min`, { direction: 'top', offset: [0, -12] });
+    group.addLayer(marker);
+  }
+  return group;
+}
+
 export async function toggleLayer(key) {
   if (leafletLayers[key]) {
     if (activeLayers.has(key)) {
       map.removeLayer(leafletLayers[key]);
       activeLayers.delete(key);
       // clear selection if it belonged to this layer
-      if (selectedLayer && leafletLayers[key].hasLayer(selectedLayer)) {
+      if (leafletLayers[key].hasLayer && selectedLayer && leafletLayers[key].hasLayer(selectedLayer)) {
         selectedLayer = null;
         document.getElementById('info-panel').style.display = 'none';
       }
@@ -143,8 +169,17 @@ export async function toggleLayer(key) {
     return;
   }
 
-  // first load — no per-feature click handlers; map-level click handles everything
   const cfg = LAYER_CONFIG[key];
+
+  if (cfg.type === 'points') {
+    const layer = await buildPointsLayer(cfg);
+    layer.addTo(map);
+    leafletLayers[key] = layer;
+    activeLayers.add(key);
+    return;
+  }
+
+  // first load — no per-feature click handlers; map-level click handles everything
   const data = await loadGeoJSON(key);
 
   const layer = L.geoJSON(data, {
