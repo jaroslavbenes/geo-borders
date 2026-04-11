@@ -63,7 +63,7 @@ NEIGHBORHOODS = [
         "Křimice-Na Brůdku",
         "Na Stráních",
     ]),
-    ("Vinice a Košutka", [
+    ("Lochotín, Vinice a Košutka", [
         "Vinice-jih",
         "Vinice-sever",
         "Sylván",
@@ -71,8 +71,6 @@ NEIGHBORHOODS = [
         "Stará Košutka",
         "Průmyslová zóna Košutka",
         "Sídliště Košutka",
-    ]),
-    ("Lochotín", [
         "Nemocnice Lochotín",
         "Starý Lochotín",
         "Sídliště Lochotín-jih",
