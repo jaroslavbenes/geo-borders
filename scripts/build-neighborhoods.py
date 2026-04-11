@@ -26,10 +26,11 @@ NEIGHBORHOODS = [
         "Lobezská-průmyslový obvod",
         "U zimního stadionu",
     ]),
-    ("Roudná", [
+    ("Roudná a ZOO", [
         "Roudná",
         "Záhorsko",
         "Zadní Roudná",
+        "Park kultury",
     ]),
     ("Doudlevce", [
         "Doudlevce",
@@ -61,9 +62,6 @@ NEIGHBORHOODS = [
         "Slovanské údolí",
         "Křimice-Na Brůdku",
         "Na Stráních",
-    ]),
-    ("Park kultury", [
-        "Park kultury",
     ]),
     ("Vinice a Košutka", [
         "Vinice-jih",
