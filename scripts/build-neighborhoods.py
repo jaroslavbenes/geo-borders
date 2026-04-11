@@ -148,14 +148,12 @@ NEIGHBORHOODS = [
     ("Koterov", [
         "Koterov",
     ]),
-    ("Černice", [
+    ("Radobyčice a Černice", [
+        "Radobyčice",
+        "Podhájí",
         "Čechurov-jih",
         "Bručná-jih",
         "Černice",
-    ]),
-    ("Radobyčice", [
-        "Radobyčice",
-        "Podhájí",
     ]),
     ("Výsluní", [
         "Výsluní",
