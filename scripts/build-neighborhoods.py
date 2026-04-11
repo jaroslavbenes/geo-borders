@@ -121,6 +121,7 @@ NEIGHBORHOODS = [
         "Obchodní centrum Rokycanská",
         "Na Švabinách",
         "Letná",
+        "Nad Týncem",
     ]),
     ("Lobzy", [
         "Lobzy",
@@ -146,6 +147,7 @@ NEIGHBORHOODS = [
         "Bručná-sever",
         "Hradiště",
         "Malá Homolka",
+        "Sídliště Slovany",
     ]),
     ("Božkov", [
         "Božkov-průmyslový obvod",
@@ -202,11 +204,8 @@ NEIGHBORHOODS = [
     ]),
     ("Červený Hrádek", [
         "Červený Hrádek",
+        "V Hájku",
     ]),
-    # Unassigned ZSJs get their own entry
-    ("Nad Týncem", ["Nad Týncem"]),
-    ("V Hájku", ["V Hájku"]),
-    ("Sídliště Slovany", ["Sídliště Slovany"]),
 ]
 
 # ---------------------------------------------------------------------------
