@@ -97,9 +97,14 @@ NEIGHBORHOODS = [
         "Bolevecké rybníky",
         "Orlík",
     ]),
-    ("Bukovec", [
+    ("Bukovec, Újezd a Červený Hrádek", [
         "Bukovec",
         "Bukovec-průmyslový obvod",
+        "Zadní Újezd",
+        "Přední Újezd",
+        "Zábělá",
+        "Červený Hrádek",
+        "V Hájku",
     ]),
     ("Doubravka", [
         "Doubravka",
@@ -188,15 +193,6 @@ NEIGHBORHOODS = [
         "Radčice-Pod Kyjovem",
         "Malesice",
         "Dolní Vlkýš",
-    ]),
-    ("Újezd", [
-        "Zadní Újezd",
-        "Přední Újezd",
-        "Zábělá",
-    ]),
-    ("Červený Hrádek", [
-        "Červený Hrádek",
-        "V Hájku",
     ]),
 ]
 
