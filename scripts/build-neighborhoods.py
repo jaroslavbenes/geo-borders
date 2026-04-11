@@ -35,7 +35,6 @@ NEIGHBORHOODS = [
     ("Doudlevce", [
         "U zimního stadionu",
         "Doudlevce",
-        "U Doudleveckého hřbitova",
         "Doudlevce-průmyslový obvod",
     ]),
     ("Bory", [
@@ -141,7 +140,6 @@ NEIGHBORHOODS = [
         "Staré Slovany-západ",
         "Bručná-sever",
         "Hradiště",
-        "Malá Homolka",
         "Sídliště Slovany",
         "Čechurov-sever",
     ]),
@@ -163,6 +161,8 @@ NEIGHBORHOODS = [
     ]),
     ("Výsluní", [
         "Výsluní",
+        "Malá Homolka",
+        "U Doudleveckého hřbitova",
     ]),
     ("Litice", [
         "Litice-u řeky",
