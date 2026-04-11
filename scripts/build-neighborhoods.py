@@ -105,7 +105,7 @@ NEIGHBORHOODS = [
         "Červený Hrádek",
         "V Hájku",
     ]),
-    ("Doubravka", [
+    ("Doubravka a Lobzy", [
         "Doubravka",
         "Doubravka-průmyslový obvod",
         "Malá Doubravka",
@@ -120,8 +120,6 @@ NEIGHBORHOODS = [
         "Na Švabinách",
         "Letná",
         "Nad Týncem",
-    ]),
-    ("Lobzy", [
         "Lobzy",
         "Pod Švabinami",
         "Vyšehrad",
