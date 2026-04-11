@@ -32,11 +32,9 @@ NEIGHBORHOODS = [
         "Zadní Roudná",
         "Park kultury",
     ]),
-    ("Doudlevce", [
+    ("Bory a Doudlevce", [
         "Doudlevce",
         "Doudlevce-průmyslový obvod",
-    ]),
-    ("Bory", [
         "Bezovka",
         "Proti Belánce",
         "Bory-u nemocnice",
