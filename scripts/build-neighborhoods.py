@@ -26,6 +26,7 @@ NEIGHBORHOODS = [
     ("Roudná", [
         "Roudná",
         "Záhorsko",
+        "Zadní Roudná",
     ]),
     ("Petrohrad", [
         "Petrohrad",
@@ -70,12 +71,10 @@ NEIGHBORHOODS = [
     ("Park kultury", [
         "Park kultury",
     ]),
-    ("Vinice", [
+    ("Vinice a Košutka", [
         "Vinice-jih",
         "Vinice-sever",
         "Sylván",
-    ]),
-    ("Košutka", [
         "U cizineckého domu",
         "Stará Košutka",
         "Průmyslová zóna Košutka",
@@ -90,9 +89,6 @@ NEIGHBORHOODS = [
         "Pod Mikulkou",
         "Zavadilka-sever",
         "Zavadilka-jih",
-    ]),
-    ("Zadní Roudná", [
-        "Zadní Roudná",
     ]),
     ("Bílá Hora", [
         "Bílá Hora",
