@@ -7,7 +7,7 @@ const PLZEN_ZOOM = 12;
 let map;
 const leafletLayers = {};
 const geojsonCache = {};
-let activeLayers = new Set(['zsj']);
+let activeLayers = new Set(['neighborhoods']);
 let selectedLayer = null; // persists after click; hover is separate
 
 export function initMap() {
