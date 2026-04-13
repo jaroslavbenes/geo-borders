@@ -115,6 +115,34 @@ function styleFeature(cfg, highlight = false) {
   };
 }
 
+const LABELS_SUFFIX = '-labels';
+
+function centroid(geometry) {
+  const ring = geometry.type === 'MultiPolygon'
+    ? geometry.coordinates.reduce((a, b) => a[0].length > b[0].length ? a : b)[0]
+    : geometry.coordinates[0];
+  const n = ring.length;
+  const sum = ring.reduce((acc, [lng, lat]) => [acc[0] + lng, acc[1] + lat], [0, 0]);
+  return [sum[1] / n, sum[0] / n];
+}
+
+function buildLabels(data, cfg) {
+  const group = L.layerGroup();
+  for (const f of data.features) {
+    const name = f.properties[cfg.nameField];
+    if (!name) continue;
+    const [lat, lng] = centroid(f.geometry);
+    const icon = L.divIcon({
+      className: 'neighborhood-label',
+      html: name,
+      iconSize: [0, 0],
+      iconAnchor: [0, 0],
+    });
+    group.addLayer(L.marker([lat, lng], { icon, interactive: false }));
+  }
+  return group;
+}
+
 function showInfo(props, cfg) {
   const panel = document.getElementById('info-panel');
   document.getElementById('info-name').textContent = props[cfg.nameField] || '—';
@@ -153,17 +181,19 @@ async function buildPointsLayer(cfg) {
 }
 
 export async function toggleLayer(key) {
+  const labelsKey = key + LABELS_SUFFIX;
   if (leafletLayers[key]) {
     if (activeLayers.has(key)) {
       map.removeLayer(leafletLayers[key]);
+      if (leafletLayers[labelsKey]) map.removeLayer(leafletLayers[labelsKey]);
       activeLayers.delete(key);
-      // clear selection if it belonged to this layer
       if (leafletLayers[key].hasLayer && selectedLayer && leafletLayers[key].hasLayer(selectedLayer)) {
         selectedLayer = null;
         document.getElementById('info-panel').style.display = 'none';
       }
     } else {
       map.addLayer(leafletLayers[key]);
+      if (leafletLayers[labelsKey]) map.addLayer(leafletLayers[labelsKey]);
       activeLayers.add(key);
     }
     return;
@@ -202,6 +232,12 @@ export async function toggleLayer(key) {
 
   leafletLayers[key] = layer;
   activeLayers.add(key);
+
+  if (key === 'neighborhoods') {
+    const labels = buildLabels(data, cfg);
+    labels.addTo(map);
+    leafletLayers[labelsKey] = labels;
+  }
 }
 
 export function flyToFeature(key, name) {
